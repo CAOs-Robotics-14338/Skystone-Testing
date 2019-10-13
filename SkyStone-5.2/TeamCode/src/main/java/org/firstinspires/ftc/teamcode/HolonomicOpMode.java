@@ -56,7 +56,7 @@ public class HolonomicOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor  FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
+    private DcMotor  FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor, IntakeLeftMotor, IntakeRightMotor;
 
     HolonomicDrive holonomicDrive;
 
@@ -74,8 +74,10 @@ public class HolonomicOpMode extends OpMode
         FrontLeftMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
         BackRightMotor  = hardwareMap.get(DcMotor.class, "back_right_drive");
         BackLeftMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
+        IntakeLeftMotor = hardwareMap.get(DcMotor.class, "intake_left_motor");
+        IntakeRightMotor = hardwareMap.get(DcMotor.class, "intake_right_motor");
 
-        holonomicDrive = new HolonomicDrive(FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor);
+        holonomicDrive = new HolonomicDrive(FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor, IntakeRightMotor, IntakeLeftMotor);
 
 
         // Tell the driver that initialization is complete.
@@ -105,9 +107,12 @@ public class HolonomicOpMode extends OpMode
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;
         double z = gamepad1.right_stick_x;
+        boolean button_a = gamepad1.a;
+        boolean button_b = gamepad1.b;
+
 
         holonomicDrive.teleopDrive(x,y,z);
-
+        holonomicDrive.intakeMotor(button_a,button_b);
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }

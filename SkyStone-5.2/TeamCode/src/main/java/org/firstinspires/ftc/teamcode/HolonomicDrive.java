@@ -6,7 +6,7 @@ import java.lang.Math;
 
 public class HolonomicDrive {
     String motorRotationDirection;
-    DcMotor FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
+    DcMotor FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor, IntakeLeftMotor, IntakeRightMotor;
 
     public HolonomicDrive(DcMotor FrontRight, DcMotor FrontLeft, DcMotor BackRight, DcMotor BackLeft){
         motorRotationDirection = "CLOCKWISE";
@@ -14,15 +14,29 @@ public class HolonomicDrive {
         FrontLeftMotor = FrontLeft;
         BackRightMotor = BackRight;
         BackLeftMotor = BackLeft;
+
     }
 
-    public HolonomicDrive(String motorDirection, DcMotor FrontRight, DcMotor FrontLeft, DcMotor BackRight, DcMotor BackLeft){
+    public HolonomicDrive(DcMotor FrontRight, DcMotor FrontLeft, DcMotor BackRight, DcMotor BackLeft, DcMotor LeftIntake, DcMotor RightIntake){
+        motorRotationDirection = "CLOCKWISE";
+        FrontRightMotor = FrontRight;
+        FrontLeftMotor = FrontLeft;
+        BackRightMotor = BackRight;
+        BackLeftMotor = BackLeft;
+        IntakeLeftMotor = LeftIntake;
+        IntakeRightMotor = RightIntake;
+    }
+
+
+    public HolonomicDrive(String motorDirection, DcMotor FrontRight, DcMotor FrontLeft, DcMotor BackRight, DcMotor BackLeft, DcMotor LeftIntake, DcMotor RightIntake){
         if(motorDirection.equals("COUNTER-CLOCKWISE")){
             motorRotationDirection = "COUNTER-CLOCKWISE";
             FrontRightMotor = FrontRight;
             FrontLeftMotor = FrontLeft;
             BackRightMotor = BackRight;
             BackLeftMotor = BackLeft;
+            IntakeLeftMotor = LeftIntake;
+            IntakeRightMotor = RightIntake;
         }
         else {//"CLOCKWISE"
             motorRotationDirection = "CLOCKWISE";
@@ -30,6 +44,8 @@ public class HolonomicDrive {
             FrontLeftMotor = FrontLeft;
             BackRightMotor = BackRight;
             BackLeftMotor = BackLeft;
+            IntakeLeftMotor = LeftIntake;
+            IntakeRightMotor = RightIntake;
         }
     }
 
@@ -114,5 +130,24 @@ public class HolonomicDrive {
         FrontLeftMotor.setPower(0);
         BackRightMotor.setPower(0);
         BackLeftMotor.setPower(0);
+    }
+
+    public void intakeMotor(boolean a, boolean b){
+        if(a == true){
+            IntakeLeftMotor.setPower(0.5);
+            IntakeRightMotor.setPower(-0.5);
+
+        }
+        else if (b == true){
+            IntakeLeftMotor.setPower(-0.5);
+            IntakeRightMotor.setPower(0.5);
+
+        }
+        else{
+            IntakeLeftMotor.setPower(0);
+            IntakeRightMotor.setPower(0);
+
+        }
+
     }
 }
