@@ -134,13 +134,13 @@ public class HolonomicDrive {
 
     public void intakeMotor(boolean a, boolean b){
         if(a == true){
-            IntakeLeftMotor.setPower(0.5);
-            IntakeRightMotor.setPower(-0.5);
+            IntakeLeftMotor.setPower(0.75);
+            IntakeRightMotor.setPower(-0.75);
 
         }
         else if (b == true){
-            IntakeLeftMotor.setPower(-0.5);
-            IntakeRightMotor.setPower(0.5);
+            IntakeLeftMotor.setPower(-0.75);
+            IntakeRightMotor.setPower(0.75);
 
         }
         else{
