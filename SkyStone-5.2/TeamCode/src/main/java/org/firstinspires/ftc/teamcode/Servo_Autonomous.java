@@ -15,18 +15,20 @@ public class Servo_Autonomous extends LinearOpMode {
         left_hook = hardwareMap.servo.get("left_hook");
         right_hook = hardwareMap.servo.get("right_hook");
 
-        left_hook .setPosition(0);
-        right_hook.setPosition(0);
+        left_hook .setPosition(.5);
+        right_hook.setPosition(0.7);
 
         waitForStart();
 
-        left_hook.setPosition(.5);
-        right_hook.setPosition(.5);
-
-        sleep(2000);
-
         left_hook.setPosition(0);
-        right_hook.setPosition(0);
+        right_hook.setPosition(.4);
+
+        sleep(5000);
+
+        left_hook.setPosition(0.5);
+        right_hook.setPosition(0.7);
+
+        sleep(1000);
 
 
     }
