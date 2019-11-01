@@ -102,11 +102,18 @@ public class HolonomicDrive {
         double FrontLeftMotorPower = -maxSpeed * Math.cos(minusX);
         double BackRightMotorPower = maxSpeed * Math.cos(minusX);
         double BackLeftMotorPower = -maxSpeed * Math.cos(plusX);
+        double p = 0.0;
+        if (directionDegrees < 180){
+            p = -0.19;
+        }
+        else{
+            p = 0.19;
+        }
 
         FrontRightMotor.setPower(FrontRightMotorPower);
-        FrontLeftMotor.setPower(FrontLeftMotorPower);
+        FrontLeftMotor.setPower(FrontLeftMotorPower+p);
         BackRightMotor.setPower(BackRightMotorPower);
-        BackLeftMotor.setPower(BackLeftMotorPower);
+        BackLeftMotor.setPower(BackLeftMotorPower+p);
     }
 
     public void stopMoving(){
