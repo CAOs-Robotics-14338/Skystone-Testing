@@ -70,7 +70,7 @@ public class Servo_Autonomous extends LinearOpMode {
             telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-        
+
         Context myApp = hardwareMap.appContext;
         SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
         params.loopControl = 0;
