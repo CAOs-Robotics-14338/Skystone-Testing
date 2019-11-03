@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import android.content.Context;
+
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +12,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Servo_Autonomous", group="test")
 public class Servo_Autonomous extends LinearOpMode {
+    boolean soundPlaying = false;
+    int     soundID         = 16;
 
     Servo left_hook, right_hook;
     /* Declare OpMode members. */
@@ -65,6 +70,16 @@ public class Servo_Autonomous extends LinearOpMode {
             telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+        
+        Context myApp = hardwareMap.appContext;
+        SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+        params.loopControl = 0;
+        params.waitForNonLoopingSoundsToFinish = false;
+        SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
+                new Runnable() {
+                    public void run() {
+                        soundPlaying = false;
+                    }} );
 
     }
 
