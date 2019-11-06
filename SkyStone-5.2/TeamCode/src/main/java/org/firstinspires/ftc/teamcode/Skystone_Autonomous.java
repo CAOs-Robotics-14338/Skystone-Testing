@@ -29,6 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.content.Context;
+
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -96,6 +99,8 @@ public class Skystone_Autonomous extends LinearOpMode {
 
     private DcMotor FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
     HolonomicDrive holonomicDrive;
+    int soundID = 0;
+    boolean soundPlaying = false;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -374,7 +379,19 @@ public class Skystone_Autonomous extends LinearOpMode {
                 double xPosition = translation.get(0);
                 // Work to find bounds for number below, can test for location of skystone and run code accordingly
                 if (xPosition < -10) {
+
                     positionSkystone = "left";
+
+                    soundID = 16;
+                    Context myApp = hardwareMap.appContext;
+                    SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+                    params.loopControl = 0;
+                    params.waitForNonLoopingSoundsToFinish = false;
+                    SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
+                            new Runnable() {
+                                public void run() {
+                                    soundPlaying = false;
+                                }} );
                     // Move forwards for three quarters of a second
 
                     runtime.reset();
@@ -409,6 +426,18 @@ public class Skystone_Autonomous extends LinearOpMode {
                 else if (xPosition >= 10){
                     positionSkystone = "right";
 
+                    soundID = 13;
+                    Context myApp = hardwareMap.appContext;
+                    SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+                    params.loopControl = 0;
+                    params.waitForNonLoopingSoundsToFinish = false;
+                    SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
+                            new Runnable() {
+                                public void run() {
+                                    soundPlaying = false;
+                                }} );
+
+
                     runtime.reset();
                     holonomicDrive.autoDrive(0, 0.5);
                     while (opModeIsActive() && runtime.seconds() < 0.75) {
@@ -441,6 +470,18 @@ public class Skystone_Autonomous extends LinearOpMode {
                 }
                 else {
                     positionSkystone = "center";
+
+                    soundID = 14;
+                    Context myApp = hardwareMap.appContext;
+                    SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+                    params.loopControl = 0;
+                    params.waitForNonLoopingSoundsToFinish = false;
+                    SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
+                            new Runnable() {
+                                public void run() {
+                                    soundPlaying = false;
+                                }} );
+
                     runtime.reset();
                     holonomicDrive.autoDrive(0, 0.5);
                     while (opModeIsActive() && runtime.seconds() < 0.75) {
@@ -467,10 +508,13 @@ public class Skystone_Autonomous extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-            } else {
+            }
+            /*else {
                 positionSkystone = "right";
                 telemetry.addData("Visible Target", "none");
             }
+            
+             */
             telemetry.addData("Skystone position", positionSkystone);
             telemetry.update();
 
