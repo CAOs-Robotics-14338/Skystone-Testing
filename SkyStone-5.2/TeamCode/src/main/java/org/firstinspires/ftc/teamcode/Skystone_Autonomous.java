@@ -513,7 +513,7 @@ public class Skystone_Autonomous extends LinearOpMode {
                 positionSkystone = "right";
                 telemetry.addData("Visible Target", "none");
             }
-            
+
              */
             telemetry.addData("Skystone position", positionSkystone);
             telemetry.update();
