@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name="Servo_Autonomous", group="test")
 // Creating class named servo autonomous that uses linear op mode
 public class Servo_Autonomous extends LinearOpMode {
+
     // Declaring variable to ensure that sounds are not playing over each other
     boolean soundPlaying = false;
     // Declaring a variable for the id of our sound we want play later
@@ -50,6 +51,17 @@ public class Servo_Autonomous extends LinearOpMode {
 
         // Waiting for the player to hit the play button on the drive station phone when autonomous starts
         waitForStart();
+        soundID = 16;
+        Context myApp = hardwareMap.appContext;
+        SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+        params.loopControl = 0;
+        params.waitForNonLoopingSoundsToFinish = false;
+        SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
+                new Runnable() {
+                    public void run() {
+                        soundPlaying = false;
+                    }} );
+
 
         // Resetting our runtime variable which we will use to measure how long a process has been running
         runtime.reset();
@@ -101,8 +113,7 @@ public class Servo_Autonomous extends LinearOpMode {
             telemetry.update();
         }
         // Adding experimental code for playing a sound
-        Context myApp = hardwareMap.appContext;
-        SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+
         params.loopControl = 0;
         params.waitForNonLoopingSoundsToFinish = false;
         SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
