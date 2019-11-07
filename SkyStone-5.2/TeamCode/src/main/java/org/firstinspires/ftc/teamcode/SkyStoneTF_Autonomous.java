@@ -183,15 +183,28 @@ public class SkyStoneTF_Autonomous {
                             telemetry.update();
                         }
                         if (sky == true)
+                        {
                             FrontRightMotor.setPower(0.4);
-                            FrontLeftMotor.setPower(-0.4);
-                            BackRightMotor.setPower(0.4);
-                            BackLeftMotor.setPower(-0.4);
-                            while (opModeIsActive() && runtime.seconds() < 0.5) {
-                                telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                                telemetry.update();
+                        FrontLeftMotor.setPower(-0.4);
+                        BackRightMotor.setPower(0.4);
+                        BackLeftMotor.setPower(-0.4);
+                        while (opModeIsActive() && runtime.seconds() < 0.5) {
+                            telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+                            telemetry.update();
                         }
-                            holonomicDrive.stopMoving();
+                        holonomicDrive.stopMoving();
+                    }
+                        else
+                            {
+                                runtime.reset();
+                                holonomicDrive.autoDrive(90, 0.5);
+                                while (opModeIsActive() && runtime.seconds() < 0.25){
+                                    telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+                                    telemetry.update();
+                                }
+                                holonomicDrive.stopMoving();
+                        }
+
 
 
                     }
