@@ -61,8 +61,12 @@ public class SkyStoneTF_Autonomous {
 
 
 
+<<<<<<< Updated upstream
 
     @Autonomous(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+=======
+    @Autonomous(name = "TensorFlow Autonomous Test", group = "Concept")
+>>>>>>> Stashed changes
     public class TensorFlowTestWeb extends LinearOpMode {
         private DcMotor  FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
         HolonomicDrive holonomicDrive;

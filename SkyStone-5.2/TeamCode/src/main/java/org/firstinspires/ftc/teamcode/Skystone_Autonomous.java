@@ -88,7 +88,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * is explained below.
  */
 
-@Autonomous(name="SKYSTONE Vuforia Nav Webcam", group ="Concept")
+@Autonomous(name="SKYSTONE Detection Autonomous", group ="Experimental")
 public class Skystone_Autonomous extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
@@ -99,8 +99,7 @@ public class Skystone_Autonomous extends LinearOpMode {
 
     private DcMotor FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
     HolonomicDrive holonomicDrive;
-    int soundID = 0;
-    boolean soundPlaying = false;
+
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -155,9 +154,9 @@ public class Skystone_Autonomous extends LinearOpMode {
     public void runOpMode() {
 
 
-        FrontRightMotor  = hardwareMap.get(DcMotor.class, "front_right_drive");
+        FrontRightMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
         FrontLeftMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
-        BackRightMotor  = hardwareMap.get(DcMotor.class, "back_right_drive");
+        BackRightMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
         BackLeftMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
 
         holonomicDrive = new HolonomicDrive(FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor);
@@ -345,6 +344,16 @@ public class Skystone_Autonomous extends LinearOpMode {
 
         waitForStart();
 
+        runtime.reset();
+        holonomicDrive.autoDrive(0, 0.5);
+        while (opModeIsActive() && runtime.seconds() < 0.85) {
+            telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        holonomicDrive.stopMoving();
+        sleep(2000);
+
+
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
@@ -370,7 +379,6 @@ public class Skystone_Autonomous extends LinearOpMode {
             }
 
             // Provide feedback as to where the robot is located (if we know).
-            String positionSkystone = "";
             if (targetVisible) {
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
@@ -378,6 +386,7 @@ public class Skystone_Autonomous extends LinearOpMode {
                         translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
                 double xPosition = translation.get(0);
                 // Work to find bounds for number below, can test for location of skystone and run code accordingly
+<<<<<<< Updated upstream
                 if (xPosition < -10) {
 
                     positionSkystone = "left";
@@ -393,36 +402,21 @@ public class Skystone_Autonomous extends LinearOpMode {
                                     soundPlaying = false;
                                 }} );
                     // Move forwards for three quarters of a second
+=======
 
-                    runtime.reset();
-                    holonomicDrive.autoDrive(0, 0.5);
-                    while (opModeIsActive() && runtime.seconds() < 0.75) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
-                    // Move left for a quarter of a second
-                    runtime.reset();
-                    holonomicDrive.autoDrive(270, 0.5);
-                    while (opModeIsActive() && runtime.seconds() < 0.25) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    //turn to the left, hopefully 90 degrees
+>>>>>>> Stashed changes
 
-                    FrontRightMotor.setPower(0.4);
-                    FrontLeftMotor.setPower(-0.4);
-                    BackRightMotor.setPower(0.4);
-                    BackLeftMotor.setPower(-0.4);
-                    while (opModeIsActive() && runtime.seconds() < 0.5) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
+                //turn to the left, hopefully 90 degrees
 
-                    // add servo code for arm
-
+                FrontRightMotor.setPower(0.4);
+                FrontLeftMotor.setPower(-0.4);
+                BackRightMotor.setPower(0.4);
+                BackLeftMotor.setPower(-0.4);
+                while (opModeIsActive() && runtime.seconds() < 0.5) {
+                    telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
                 }
+<<<<<<< Updated upstream
                 else if (xPosition >= 10){
                     positionSkystone = "right";
 
@@ -464,10 +458,21 @@ public class Skystone_Autonomous extends LinearOpMode {
                         telemetry.update();
                     }
                     holonomicDrive.stopMoving();
+=======
+                holonomicDrive.stopMoving();
+>>>>>>> Stashed changes
 
-                    // add servo code for arm
+                // add servo code for arm
 
+            } else {
+                // Move right for a quarter of a second
+                runtime.reset();
+                holonomicDrive.autoDrive(90, 0.5);
+                while (opModeIsActive() && runtime.seconds() < 0.25) {
+                    telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
                 }
+<<<<<<< Updated upstream
                 else {
                     positionSkystone = "center";
 
@@ -481,45 +486,23 @@ public class Skystone_Autonomous extends LinearOpMode {
                                 public void run() {
                                     soundPlaying = false;
                                 }} );
+=======
+                holonomicDrive.stopMoving();
 
-                    runtime.reset();
-                    holonomicDrive.autoDrive(0, 0.5);
-                    while (opModeIsActive() && runtime.seconds() < 0.75) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
-                    //turn to the left, hopefully 90 degrees
+>>>>>>> Stashed changes
 
-                    FrontRightMotor.setPower(0.4);
-                    FrontLeftMotor.setPower(-0.4);
-                    BackRightMotor.setPower(0.4);
-                    BackLeftMotor.setPower(-0.4);
-                    while (opModeIsActive() && runtime.seconds() < 0.5) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
-
-                    // add servo code for arm
-
-                }
-
-                // express the rotation of the robot in degrees.
-                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-                telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-            }
-            /*else {
-                positionSkystone = "right";
-                telemetry.addData("Visible Target", "none");
             }
 
-             */
-            telemetry.addData("Skystone position", positionSkystone);
-            telemetry.update();
+            // express the rotation of the robot in degrees.
+            Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+            telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+        }
+
+
+
 
             // Disable Tracking when we are done;
             targetsSkyStone.deactivate();
-        }
     }
 }
+
