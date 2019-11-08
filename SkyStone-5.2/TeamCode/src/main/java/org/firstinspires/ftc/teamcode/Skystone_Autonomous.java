@@ -386,25 +386,7 @@ public class Skystone_Autonomous extends LinearOpMode {
                         translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
                 double xPosition = translation.get(0);
                 // Work to find bounds for number below, can test for location of skystone and run code accordingly
-<<<<<<< Updated upstream
-                if (xPosition < -10) {
 
-                    positionSkystone = "left";
-
-                    soundID = 16;
-                    Context myApp = hardwareMap.appContext;
-                    SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
-                    params.loopControl = 0;
-                    params.waitForNonLoopingSoundsToFinish = false;
-                    SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                            new Runnable() {
-                                public void run() {
-                                    soundPlaying = false;
-                                }} );
-                    // Move forwards for three quarters of a second
-=======
-
->>>>>>> Stashed changes
 
                 //turn to the left, hopefully 90 degrees
 
@@ -416,53 +398,7 @@ public class Skystone_Autonomous extends LinearOpMode {
                     telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
                 }
-<<<<<<< Updated upstream
-                else if (xPosition >= 10){
-                    positionSkystone = "right";
 
-                    soundID = 13;
-                    Context myApp = hardwareMap.appContext;
-                    SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
-                    params.loopControl = 0;
-                    params.waitForNonLoopingSoundsToFinish = false;
-                    SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                            new Runnable() {
-                                public void run() {
-                                    soundPlaying = false;
-                                }} );
-
-
-                    runtime.reset();
-                    holonomicDrive.autoDrive(0, 0.5);
-                    while (opModeIsActive() && runtime.seconds() < 0.75) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
-                    // Move right for a quarter of a second
-                    runtime.reset();
-                    holonomicDrive.autoDrive(90, 0.5);
-                    while (opModeIsActive() && runtime.seconds() < 0.25) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
-                    //turn to the left, hopefully 90 degrees
-
-                    FrontRightMotor.setPower(0.4);
-                    FrontLeftMotor.setPower(-0.4);
-                    BackRightMotor.setPower(0.4);
-                    BackLeftMotor.setPower(-0.4);
-                    while (opModeIsActive() && runtime.seconds() < 0.5) {
-                        telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
-                        telemetry.update();
-                    }
-                    holonomicDrive.stopMoving();
-=======
-                holonomicDrive.stopMoving();
->>>>>>> Stashed changes
-
-                // add servo code for arm
 
             } else {
                 // Move right for a quarter of a second
@@ -472,24 +408,6 @@ public class Skystone_Autonomous extends LinearOpMode {
                     telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
                 }
-<<<<<<< Updated upstream
-                else {
-                    positionSkystone = "center";
-
-                    soundID = 14;
-                    Context myApp = hardwareMap.appContext;
-                    SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
-                    params.loopControl = 0;
-                    params.waitForNonLoopingSoundsToFinish = false;
-                    SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                            new Runnable() {
-                                public void run() {
-                                    soundPlaying = false;
-                                }} );
-=======
-                holonomicDrive.stopMoving();
-
->>>>>>> Stashed changes
 
             }
 

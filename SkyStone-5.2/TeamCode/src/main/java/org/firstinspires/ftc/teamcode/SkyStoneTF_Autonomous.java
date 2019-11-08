@@ -61,12 +61,9 @@ public class SkyStoneTF_Autonomous {
 
 
 
-<<<<<<< Updated upstream
 
-    @Autonomous(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
-=======
     @Autonomous(name = "TensorFlow Autonomous Test", group = "Concept")
->>>>>>> Stashed changes
+
     public class TensorFlowTestWeb extends LinearOpMode {
         private DcMotor  FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
         HolonomicDrive holonomicDrive;
@@ -74,7 +71,6 @@ public class SkyStoneTF_Autonomous {
         private static final String LABEL_FIRST_ELEMENT = "Stone";
         private static final String LABEL_SECOND_ELEMENT = "Skystone";
         // Declaring variable to ensure that sounds are not playing over each other
-        boolean soundPlaying = false;
         boolean sky = false;
         private ElapsedTime runtime = new ElapsedTime();
 
@@ -120,10 +116,7 @@ public class SkyStoneTF_Autonomous {
             // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
             // first.
             initVuforia();
-            SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
-            params.loopControl = 0;
-            params.waitForNonLoopingSoundsToFinish = true;
-            Context myApp = hardwareMap.appContext;
+
 
             if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
                 initTfod();
@@ -144,15 +137,7 @@ public class SkyStoneTF_Autonomous {
             telemetry.update();
             waitForStart();
 
-            // Signal that the sound is now playing.
-            soundPlaying = true;
-            int soundID = 2;
-            // Start playing, and also Create a callback that will clear the playing flag when the sound is complete.
-            SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                    new Runnable() {
-                        public void run() {
-                            soundPlaying = false;
-                        }} );
+
 
             runtime.reset();
             holonomicDrive.autoDrive(0, 0.5);
