@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
         import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -16,8 +17,7 @@ package org.firstinspires.ftc.teamcode;
 @Autonomous(name="Drive Avoid Imu", group="Exercises")
 public class Gyro extends LinearOpMode
 {
-    DcMotor                 leftMotor, rightMotor;
-    TouchSensor             touch;
+    private DcMotor  FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
     BNO055IMU               imu;
     Orientation             lastAngles = new Orientation();
     double                  globalAngle, power = .30, correction;
@@ -123,9 +123,10 @@ public class Gyro extends LinearOpMode
         leftMotor.setPower(0);
     }
 
-    /**
+*
      * Resets the cumulative angle tracking to zero.
-     */
+
+
     private void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -133,10 +134,11 @@ public class Gyro extends LinearOpMode
         globalAngle = 0;
     }
 
-    /**
+*
      * Get current cumulative angle rotation from last reset.
      * @return Angle in degrees. + = left, - = right.
-     */
+
+
     private double getAngle()
     {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
@@ -160,10 +162,11 @@ public class Gyro extends LinearOpMode
         return globalAngle;
     }
 
-    /**
+*
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
-     */
+
+
     private double checkDirection()
     {
         // The gain value determines how sensitive the correction is to direction changes.
@@ -183,10 +186,11 @@ public class Gyro extends LinearOpMode
         return correction;
     }
 
-    /**
+*
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
      * @param degrees Degrees to turn, + is left - is right
-     */
+
+
     private void rotate(int degrees, double power)
     {
         double  leftPower, rightPower;
@@ -235,3 +239,4 @@ public class Gyro extends LinearOpMode
         resetAngle();
     }
 }
+*/
