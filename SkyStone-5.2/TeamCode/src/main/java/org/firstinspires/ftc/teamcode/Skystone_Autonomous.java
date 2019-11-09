@@ -342,7 +342,7 @@ public class Skystone_Autonomous extends LinearOpMode {
         // CONSEQUENTLY do not put any driving commands in this loop.
         // To restore the normal opmode structure, just un-comment the following line:
 
-        waitForStart();
+        //waitForStart();
 
         runtime.reset();
         holonomicDrive.autoDrive(0, 0.5);
