@@ -29,9 +29,14 @@ package org.firstinspires.ftc.teamcode;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -49,11 +54,17 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+@Autonomous(name = "Concept cam Blue", group = "Concept")
 public class TensorFlowTestWeb extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Stone";
     private static final String LABEL_SECOND_ELEMENT = "Skystone";
+    private ElapsedTime runtime = new ElapsedTime();
+
+    private DcMotor FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor;
+    HolonomicDrive holonomicDrive;
+    Servo left_hook, right_hook;
+
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -81,9 +92,25 @@ public class TensorFlowTestWeb extends LinearOpMode {
      * Detection engine.
      */
     private TFObjectDetector tfod;
+    WebcamName webcamName = null;
 
     @Override
     public void runOpMode() {
+
+        FrontRightMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
+        FrontLeftMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
+        BackRightMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        BackLeftMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
+
+        holonomicDrive = new HolonomicDrive(FrontRightMotor, FrontLeftMotor, BackRightMotor, BackLeftMotor);
+        left_hook = hardwareMap.servo.get("left_hook");
+        right_hook = hardwareMap.servo.get("right_hook");
+        /*
+         * Retrieve the camera we are to use.
+         */
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        boolean sky = false;
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -107,6 +134,8 @@ public class TensorFlowTestWeb extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
+
+
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 if (tfod != null) {
@@ -123,6 +152,23 @@ public class TensorFlowTestWeb extends LinearOpMode {
                                     recognition.getLeft(), recognition.getTop());
                             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                     recognition.getRight(), recognition.getBottom());
+                            if (recognition.getLabel() .equals("Skystone"))
+                            {
+                                runtime.reset();
+                                holonomicDrive.autoDrive(315, 0.5);
+                                while (opModeIsActive() && runtime.seconds() < 0.75) {
+                                    telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+                                    telemetry.update();
+                                }
+                                holonomicDrive.stopMoving();
+                                left_hook.setPosition(0.4);
+
+                                sleep(2000);
+
+                            }
+
+
+
                         }
                         telemetry.update();
                     }

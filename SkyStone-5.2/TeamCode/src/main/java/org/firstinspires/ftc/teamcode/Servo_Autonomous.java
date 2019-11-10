@@ -51,16 +51,7 @@ public class Servo_Autonomous extends LinearOpMode {
 
         // Waiting for the player to hit the play button on the drive station phone when autonomous starts
         waitForStart();
-        soundID = 16;
-        Context myApp = hardwareMap.appContext;
-        SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
-        params.loopControl = 0;
-        params.waitForNonLoopingSoundsToFinish = false;
-        SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                new Runnable() {
-                    public void run() {
-                        soundPlaying = false;
-                    }} );
+
 
 
         // Resetting our runtime variable which we will use to measure how long a process has been running
@@ -114,13 +105,6 @@ public class Servo_Autonomous extends LinearOpMode {
         }
         // Adding experimental code for playing a sound
 
-        params.loopControl = 0;
-        params.waitForNonLoopingSoundsToFinish = false;
-        SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                new Runnable() {
-                    public void run() {
-                        soundPlaying = false;
-                    }} );
 
     }
 
