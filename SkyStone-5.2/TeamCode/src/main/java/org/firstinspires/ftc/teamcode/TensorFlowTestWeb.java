@@ -109,8 +109,7 @@ public class TensorFlowTestWeb extends LinearOpMode {
          * Retrieve the camera we are to use.
          */
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        boolean sky = false;
+        int pos = 1;
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -155,7 +154,7 @@ public class TensorFlowTestWeb extends LinearOpMode {
                             if (recognition.getLabel() .equals("Skystone"))
                             {
                                 runtime.reset();
-                                holonomicDrive.autoDrive(315, 0.5);
+                                holonomicDrive.autoDrive(270, 0.5);
                                 while (opModeIsActive() && runtime.seconds() < 0.75) {
                                     telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
                                     telemetry.update();
@@ -164,8 +163,20 @@ public class TensorFlowTestWeb extends LinearOpMode {
                                 left_hook.setPosition(0.4);
 
                                 sleep(2000);
+                            }
+                            else if (recognition.getLabel() . equals("Stone") && pos != 3 )
+                            {
+                                runtime.reset();
+                                holonomicDrive.autoDrive(0, 0.5);
+                                while (opModeIsActive() && runtime.seconds() < 0.25) {
+                                    telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+                                    telemetry.update();
+                                }
+                                holonomicDrive.stopMoving();
+                                sleep(1000);
 
                             }
+
 
 
 
