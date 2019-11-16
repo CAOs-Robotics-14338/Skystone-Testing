@@ -108,7 +108,7 @@ public class  ReverseHolonomicOpMode extends OpMode
 
         holonomicDrive.teleopDrive(x,y,z);
 
-        if (gamepad1.left_bumper || gamepad1.right_bumper){
+        if (gamepad1.left_bumper || gamepad1.right_bumper){ //press a bumper and the direction changes
             holonomicDrive.reverseRobotDirection();
             telemetry.addData("Reversed Direction. \n Current Direction", holonomicDrive.getMotorRotationDirection());
         }
