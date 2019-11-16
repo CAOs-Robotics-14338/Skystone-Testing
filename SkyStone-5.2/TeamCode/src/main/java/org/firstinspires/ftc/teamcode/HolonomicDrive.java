@@ -41,6 +41,16 @@ public class HolonomicDrive {
         return motorRotationDirection;
     }
 
+    public void reverseRobotDirection(){
+        String dir = this.getMotorRotationDirection();
+        if ( dir.equals("CLOCKWISE")){
+            this.setMotorRotationDirection("COUNTER-CLOCKWISE");
+        }
+        else{
+            this.setMotorRotationDirection("CLOCKWISE");
+        }
+    }
+
     public void teleopDrive(double x, double y, double z){
         if(this.getMotorRotationDirection().equals("CLOCKWISE")){
             double FrontRightMotorPower = Range.clip( (x - y + z), -1.0, 1.0);
