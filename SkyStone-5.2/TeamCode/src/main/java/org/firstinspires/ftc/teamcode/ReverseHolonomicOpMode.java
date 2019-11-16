@@ -110,6 +110,7 @@ public class  ReverseHolonomicOpMode extends OpMode
 
         if (gamepad1.left_bumper || gamepad1.right_bumper){
             holonomicDrive.reverseRobotDirection();
+            telemetry.addData("Reversed Direction. \n Current Direction", holonomicDrive.getMotorRotationDirection());
         }
 
         // Show the elapsed game time and wheel power.

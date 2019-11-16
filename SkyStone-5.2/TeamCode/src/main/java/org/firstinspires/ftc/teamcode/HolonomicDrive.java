@@ -43,7 +43,7 @@ public class HolonomicDrive {
 
     public void reverseRobotDirection(){
         String dir = this.getMotorRotationDirection();
-        if ( dir.equals("CLOCKWISE")){
+        if (dir.equals("CLOCKWISE")){
             this.setMotorRotationDirection("COUNTER-CLOCKWISE");
         }
         else{
