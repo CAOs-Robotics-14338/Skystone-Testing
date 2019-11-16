@@ -103,6 +103,13 @@ public class Servo_Autonomous extends LinearOpMode {
             telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+        holonomicDrive.stopMoving();
+        runtime.reset();
+        holonomicDrive.autoDrive(100, 0.5);
+        while (opModeIsActive() && runtime.seconds() < 4.0){
+            telemetry.addData("Path", "TIME: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
         // Adding experimental code for playing a sound
 
 
